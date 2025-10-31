@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VTT2L9LG5J"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+      
+        gtag('config', 'G-VTT2L9LG5J');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TeamLedger | Organizational Structure Chart Maker</title>
+    
+    <!-- Core SEO & Browser Integration -->
+    <meta name="theme-color" content="#22d3ee">
+    <meta name="description" content="A smarter organizational structure chart maker, built with profitability in mind. Model your team structure and instantly see the financial impact of every role." />
+    <link rel="canonical" href="https://teamledger.app/" />
+    
+    <!-- Social Sharing / Open Graph for platforms like Facebook, LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://teamledger.app/">
+    <meta property="og:title" content="TeamLedger | Organizational Structure Chart Maker">
+    <meta property="og:description" content="A smarter organizational structure chart maker, built with profitability in mind. Model your team structure and instantly see the financial impact of every role.">
+    <meta property="og:image" content="https://teamledger.app/og-image.png"> 
+    <meta property="og:site_name" content="TeamLedger">
+    
+    <!-- Twitter Card for social sharing on Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://teamledger.app/">
+    <meta name="twitter:title" content="TeamLedger | Organizational Structure Chart Maker">
+    <meta name="twitter:description" content="A smarter organizational structure chart maker, built with profitability in mind. Model your team structure and instantly see the financial impact of every role.">
+    <meta name="twitter:image" content="https://teamledger.app/og-image.png"> 
+    <meta name="twitter:creator" content="@jeffarchibald">
+
+    <!-- Icons -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png"> <!-- TODO: Create this file -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"> <!-- TODO: Create this file -->
+    
+    <!-- Fonts & Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preload the WOFF2 font file for the LCP element (H1 uses font-bold which is 700 weight) -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/manrope/v15/xn7gYHE41ni1AdIRggqxSvfedN-SU2uf.woff2" as="font" type="font/woff2" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Parkinsans&display=swap" rel="stylesheet">
+    
+    <!-- Analytics -->
+    <script defer src="https://cdn.amplitude.com/libs/analytics-browser-2.11.1-min.js.gz"></script>
+    <script defer src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.8.0-min.js.gz"></script>
+    <script>
+      window.addEventListener('load', () => {
+        window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));
+        window.amplitude.init('bf4d34aa4c682fe4cc035cb2272ac587', {"autocapture":{"elementInteractions":true}});
+      });
+    </script>
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "tv8n6dmyto");
+    </script>
+
+    <!-- Tailwind Config: In-browser configuration for Tailwind CSS -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Manrope', 'sans-serif'], // Primary font
+              parkinsans: ['Parkinsans', 'sans-serif'], // Brand/logo font
+            },
+            colors: {
+              'brand-dark': '#0D1117',
+              'brand-surface': '#161B22',
+              'brand-border': '#30363d',
+              'brand-accent': '#22d3ee', // cyan-400
+              'gray-900': '#111827',
+              'gray-800': '#1F2937',
+              'gray-700': '#374151',
+              'gray-600': '#4B5563',
+            },
+            boxShadow: {
+              'soft-glow': '0 10px 30px -15px rgba(0, 0, 0, 0.3), 0 0 20px 0 rgba(34, 211, 238, 0.05)',
+              'soft-glow-lg': '0 20px 40px -15px rgba(0, 0, 0, 0.4), 0 0 40px 0 rgba(34, 211, 238, 0.1)',
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Custom CSS -->
+    <style>
+      /* Defines a subtle gradient background for the entire application. */
+      body {
+        background: #141E30;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom left, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom left, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+      /* Defines a gradient used for card backgrounds to give them depth. */
+      .card-gradient {
+        background-image: linear-gradient(145deg, rgba(31, 41, 55, 0.5) 0%, rgba(22, 27, 34, 0.8) 100%);
+      }
+
+      /* Custom Scrollbar Styling for a modern look on Windows/Linux */
+      /* For Firefox */
+      html {
+        scrollbar-width: thin;
+        scrollbar-color: #4B5563 #161B22;
+      }
+      /* For Webkit-based browsers (Chrome, Safari, Edge) */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #161B22;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #4B5563;
+        border-radius: 10px;
+        border: 2px solid #161B22;
+      }
+       ::-webkit-scrollbar-thumb:hover {
+        background-color: #6B7280;
+      }
+
+      /* Cross-browser compatibility fixes */
+      .backdrop-blur-sm {
+        -webkit-backdrop-filter: blur(4px);
+      }
+      .backdrop-blur-md {
+        -webkit-backdrop-filter: blur(12px);
+      }
+      input, select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+
+      /* --- ACCESSIBILITY ENHANCEMENTS --- */
+      /* Utility class to visually hide elements while keeping them accessible to screen readers. */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+      /* Style for the "Skip to main content" link, making it visible on focus. */
+      .skip-link:focus {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        padding: 0.75rem 1.25rem;
+        background-color: #161B22;
+        color: #22d3ee;
+        border: 2px solid #22d3ee;
+        border-radius: 0.5rem;
+        z-index: 100;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      /* Enhanced focus outline for keyboard accessibility. Only shows for keyboard users. */
+      *:focus-visible {
+        outline: 2px solid #22d3ee; /* brand-accent */
+        outline-offset: 2px;
+        box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.2);
+        border-radius: 2px;
+      }
+
+      /* Core styles for rendering the organizational chart tree structure. */
+      .org-tree {
+        display: inline-block; /* Allows the tree to size based on content. */
+        text-align: center;
+      }
+      /* Styles for the connecting lines and layout of tree nodes. */
+      .org-tree ul {
+          padding-top: 20px;
+          position: relative;
+          transition: all 0.5s;
+          /* Symmetrical layout using flexbox. */
+          display: flex;
+          justify-content: center;
+      }
+      .org-tree li {
+          text-align: center;
+          list-style-type: none;
+          position: relative;
+          padding: 20px 5px 0 5px;
+          transition: all 0.5s;
+      }
+      /* The ::before and ::after pseudo-elements are used to draw the connecting lines. */
+      .org-tree li::before, .org-tree li::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: 50%;
+          border-top: 2px solid #4b5563; /* gray-600 */
+          width: 50%;
+          height: 20px;
+      }
+      .org-tree li::after {
+          right: auto;
+          left: 50%;
+          border-left: 2px solid #4b5563;
+      }
+      /* Rules to handle nodes with only one child or edge cases like the first/last child. */
+      .org-tree li:only-child::after, .org-tree li:only-child::before {
+          display: none;
+      }
+      .org-tree li:only-child {
+          padding-top: 0;
+      }
+      .org-tree li:first-child::before, .org-tree li:last-child::after {
+          border: 0 none;
+      }
+      .org-tree li:last-child::before {
+          border-right: 2px solid #4b5563;
+          border-radius: 0 5px 0 0;
+      }
+      .org-tree li:first-child::after {
+          border-radius: 5px 0 0 0;
+      }
+      /* The vertical line coming down from a parent node. */
+      .org-tree ul ul::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 50%;
+          border-left: 2px solid #4b5563;
+          width: 0;
+          height: 20px;
+      }
+      .org-tree li > div {
+        display: inline-block;
+        min-width: 140px;
+      }
+      /* Override Tailwind's default max-width for better content layout. */
+      .max-w-3xl {
+        max-width: 50rem;
+      }
+    </style>
+    
+    <!-- Structured Data (JSON-LD for Search Engines) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "TeamLedger",
+      "url": "https://teamledger.app/",
+      "applicationCategory": "BusinessApplication",
+      "description": "A web application to build an organizational chart and instantly see the financial impact of each role, including salary, overhead, revenue, profit, and margins.",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+    
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^11.2.0",
+    "html2canvas": "https://aistudiocdn.com/html2canvas@^1.4.1",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^0.14.0",
+    "@vercel/node": "https://aistudiocdn.com/@vercel/node@^5.5.0",
+    "path": "https://aistudiocdn.com/path@^0.12.7",
+    "vite": "https://aistudiocdn.com/vite@^7.1.12",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.0",
+    "@/": "/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="font-sans text-gray-200">
+    <a href="#main-content" class="sr-only skip-link">Skip to main content</a>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      // Userback.io widget for user feedback.
+      window.Userback = window.Userback || {};
+      Userback.access_token = "A-EXm4yXM37ZulY3Dixfib2xtna";
+      (function(d) {
+        var s = d.createElement('script');s.async = true;s.src = 'https://static.userback.io/widget/v1.js';(d.head || d.body).appendChild(s);
+      })(document);
+    </script>
+  </body>
+</html>

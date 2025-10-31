@@ -1,0 +1,5 @@
+{
+  "name": "TeamLedger App",
+  "description": "A web application for managing team ledgers and expenses, with AI-powered transaction categorization.",
+  "requestFramePermissions": []
+}
