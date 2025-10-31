@@ -564,8 +564,18 @@ const App: React.FC = () => {
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || `API request failed with status ${response.status}`);
+            let errorDetails = `API request failed with status ${response.status}`;
+            try {
+                // Try to parse as JSON first
+                const errorData = await response.json();
+                errorDetails = errorData.error || errorData.details || JSON.stringify(errorData);
+            } catch (jsonError) {
+                // If parsing as JSON fails, it's likely not JSON (e.g., HTML error page)
+                const textError = await response.text();
+                // Take a snippet to avoid excessively long error messages
+                errorDetails = `Server returned an unexpected response (status ${response.status}). Details: "${textError.substring(0, 150)}..."`;
+            }
+            throw new Error(errorDetails);
         }
         
         const analysisResult = await response.json() as AIAnalysisResult;

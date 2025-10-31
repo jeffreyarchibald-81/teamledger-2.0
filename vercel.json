@@ -1,0 +1,12 @@
+{
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "devCommand": "vite",
+  "framework": "vite",
+  "functions": {
+    "src/api/analyze.ts": {
+      "runtime": "nodejs20.x",
+      "memory": 1024
+    }
+  }
+}
