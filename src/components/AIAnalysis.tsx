@@ -17,6 +17,8 @@ interface AIAnalysisProps {
     analysisResult: AIAnalysisResult | null;
     /** Flag indicating if the analysis is currently in progress. */
     isAnalyzing: boolean;
+    /** Optional error message from the AI analysis API call. */
+    aiAnalysisError: string | null;
     /** Callback to open the unlock modal if the feature is locked. */
     onUnlockRequest: () => void;
 }
@@ -26,7 +28,7 @@ interface AIAnalysisProps {
  * It manages the UI for different states: locked, initial, loading, and results.
  * It also handles a daily usage limit stored in local storage.
  */
-const AIAnalysis: React.FC<AIAnalysisProps> = ({ isUnlocked, onRunAnalysis, analysisResult, isAnalyzing, onUnlockRequest }) => {
+const AIAnalysis: React.FC<AIAnalysisProps> = ({ isUnlocked, onRunAnalysis, analysisResult, isAnalyzing, aiAnalysisError, onUnlockRequest }) => {
     const [remainingAnalyses, setRemainingAnalyses] = useState(AI_DAILY_ANALYSIS_LIMIT);
     const [resetTimeMessage, setResetTimeMessage] = useState('');
 
@@ -116,6 +118,7 @@ const AIAnalysis: React.FC<AIAnalysisProps> = ({ isUnlocked, onRunAnalysis, anal
     /** Renders the content of the analysis card based on the current state. */
     const renderContent = () => {
         if (isAnalyzing) return <LoadingState />;
+        if (aiAnalysisError) return <ErrorState errorMessage={aiAnalysisError} onTryAgain={handleProtectedAnalysis} />; // New error state
         if (analysisResult) return <ResultsDisplay result={analysisResult} onRerun={handleProtectedAnalysis} remaining={remainingAnalyses} resetTimeMessage={resetTimeMessage} />;
         return <InitialState onAnalyze={handleProtectedAnalysis} remaining={remainingAnalyses} resetTimeMessage={resetTimeMessage} />;
     };
@@ -193,6 +196,22 @@ const LoadingState: React.FC = () => (
         />
         <p className="mt-4 text-gray-400">Analyzing your org chart...</p>
         <p className="text-sm text-gray-400">This may take a moment.</p>
+    </div>
+);
+
+/** @description The UI state for displaying an error during analysis. */
+const ErrorState: React.FC<{ errorMessage: string; onTryAgain: () => void }> = ({ errorMessage, onTryAgain }) => (
+    <div role="alert" className="text-center flex flex-col items-center justify-center min-h-[250px]">
+        <ExclamationTriangleIcon className="w-10 h-10 text-red-500 mb-3" />
+        <h3 className="text-lg font-semibold text-white">Analysis Failed</h3>
+        <p className="text-red-400 mt-2 max-w-md mx-auto">{errorMessage}</p>
+        <motion.button 
+            onClick={onTryAgain}
+            className="mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-5 rounded-lg transition-colors duration-200"
+            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+        >
+            Try Again
+        </motion.button>
     </div>
 );
 

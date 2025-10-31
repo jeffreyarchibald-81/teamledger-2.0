@@ -4,6 +4,15 @@ import { XIcon, DevicePhoneMobileIcon } from './icons';
 import { MOBILE_NOTICE_DISMISSED_KEY } from '../constants';
 
 /**
+ * @interface CookieConsentProps
+ * @description Defines the props for the CookieConsent component.
+ */
+interface CookieConsentProps {
+    /** Callback function to open the privacy policy modal. */
+    onPrivacyClick: () => void;
+}
+
+/**
  * @description A dismissible banner that appears at the bottom of the screen on mobile devices,
  * advising the user that the application is best experienced on a desktop.
  * It uses local storage to ensure it is only shown once.
@@ -24,6 +33,8 @@ const MobileNotice: React.FC = () => {
             }
         } catch (error) {
             console.error("Could not access localStorage for mobile notice:", error);
+            // Fix: Set state to false if localStorage access fails, do not return a boolean from useEffect.
+            setIsVisible(false);
         }
     }, []);
 

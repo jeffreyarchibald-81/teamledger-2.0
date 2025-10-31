@@ -134,6 +134,7 @@ const App: React.FC = () => {
   const [isStickyHeaderVisible, setIsStickyHeaderVisible] = useState(false);
   const [aiAnalysis, setAiAnalysis] = useState<AIAnalysisResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [aiAnalysisError, setAiAnalysisError] = useState<string | null>(null); // New state for API error
   const [autosaveStatus, setAutosaveStatus] = useState<'idle' | 'saving' | 'saved' | 'disabled'>('idle');
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const [isShowingSampleData, setIsShowingSampleData] = useState(false);
@@ -313,7 +314,12 @@ const App: React.FC = () => {
     setPositions(currentPositions => currentPositions.map(p => {
       if (p.id === positionUpdate.id) {
         // Merge the existing position with the update to ensure all required financial fields are present
-        const updatedFullPosition: Position = { ...p, ...positionUpdate };
+        const updatedFullPosition: Position = { 
+          ...p, 
+          ...positionUpdate,
+          // Ensure rate and utilization are 0 for nonBillable roles if roleType is changed
+          ...(positionUpdate.roleType === 'nonBillable' ? { rate: 0, utilization: 0 } : {})
+        };
         const financials = calculateFinancials(updatedFullPosition, benefitsMultiplier, overheadMultiplier, annualBillableHours);
         return { ...updatedFullPosition, ...financials };
       }
@@ -532,6 +538,7 @@ const App: React.FC = () => {
 
     setIsAnalyzing(true);
     setAiAnalysis(null);
+    setAiAnalysisError(null); // Clear any previous errors
 
     try {
         // Augment data with direct report counts for better analysis.
@@ -566,6 +573,7 @@ const App: React.FC = () => {
 
     } catch (error) {
         console.error("AI analysis failed:", error);
+        setAiAnalysisError(error instanceof Error ? error.message : "An unknown error occurred during analysis.");
     } finally {
         setIsAnalyzing(false);
     }
@@ -847,6 +855,7 @@ const App: React.FC = () => {
                 onRunAnalysis={handleRunAnalysis}
                 analysisResult={aiAnalysis}
                 isAnalyzing={isAnalyzing}
+                aiAnalysisError={aiAnalysisError} // Pass the new error state
                 onUnlockRequest={() => setIsUnlockModalOpen(true)}
             />
           </motion.div>

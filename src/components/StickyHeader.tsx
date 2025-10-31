@@ -84,7 +84,7 @@ const AutosaveIndicator: React.FC<AutosaveIndicatorProps> = ({ status, onClick }
     const content = (
         <>
             {status === 'saving' ? ( // Special case for a spinning icon.
-                <motion.div animate={{ rotate: -360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}>
+                <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}>
                     <currentStatus.Icon className="w-4 h-4" />
                 </motion.div>
             ) : (

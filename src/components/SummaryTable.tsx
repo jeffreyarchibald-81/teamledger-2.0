@@ -79,7 +79,15 @@ const SummaryTable: React.FC<SummaryTableProps> = ({ positions, onUpdatePosition
     
     // Only call the update function if the value has actually changed.
     if (position[field] !== newValue) {
-        const updatePayload: PositionUpdate = { ...position, [field]: newValue };
+        // Construct the update payload to match the PositionUpdate type
+        const updatePayload: PositionUpdate = { id: position.id, [field]: newValue };
+        if (field === 'rate' || field === 'utilization') {
+            // If editing rate or utilization, ensure roleType is considered for update consistency
+            updatePayload.roleType = position.roleType;
+        }
+        if (field === 'salary') {
+            updatePayload.roleType = position.roleType;
+        }
         onUpdatePosition(updatePayload);
     }
   
