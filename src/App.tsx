@@ -329,7 +329,7 @@ const App: React.FC = () => {
     setIsSampleNoticeVisible(false);
   }, [benefitsMultiplier, overheadMultiplier, annualBillableHours, positions, saveStateForUndo]);
 
-  /** Deletes a position and re-parents its children. */
+  /** Deletes a position and re-parenting its children. */
   const deletePosition = (id: string) => {
     saveStateForUndo(positions);
     setPositions(prev => {
@@ -531,10 +531,8 @@ const App: React.FC = () => {
 
   /** Handles the AI analysis request. */
   const handleRunAnalysis = async () => {
-    if (!isUnlocked) {
-        setIsUnlockModalOpen(true);
-        return;
-    }
+    // The AIAnalysis component now handles the `isUnlocked` check and daily limits.
+    // This function focuses solely on the API call and state updates related to it.
 
     setIsAnalyzing(true);
     setAiAnalysis(null);
@@ -565,19 +563,21 @@ const App: React.FC = () => {
 
         if (!response.ok) {
             let errorDetails = `API request failed with status ${response.status}`;
+            // Read the response body once as text
+            const rawResponseText = await response.text(); 
+
             try {
-                // Try to parse as JSON first
-                const errorData = await response.json();
+                // Attempt to parse the raw text as JSON
+                const errorData = JSON.parse(rawResponseText);
                 errorDetails = errorData.error || errorData.details || JSON.stringify(errorData);
-            } catch (jsonError) {
-                // If parsing as JSON fails, it's likely not JSON (e.g., HTML error page)
-                const textError = await response.text();
-                // Take a snippet to avoid excessively long error messages
-                errorDetails = `Server returned an unexpected response (status ${response.status}). Details: "${textError.substring(0, 150)}..."`;
+            } catch (jsonParseError) {
+                // If parsing fails, the raw text itself is the error or part of it
+                errorDetails = `Server returned an unexpected response (status ${response.status}). Details: "${rawResponseText.substring(0, 150)}..."`;
             }
             throw new Error(errorDetails);
         }
         
+        // If response.ok, then we expect JSON and can safely parse it here.
         const analysisResult = await response.json() as AIAnalysisResult;
         setAiAnalysis(analysisResult);
 

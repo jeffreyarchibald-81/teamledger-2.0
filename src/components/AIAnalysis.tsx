@@ -92,10 +92,18 @@ const AIAnalysis: React.FC<AIAnalysisProps> = ({ isUnlocked, onRunAnalysis, anal
 
     /**
      * A wrapper for the onRunAnalysis prop that also handles decrementing
-     * the daily usage count in local storage.
+     * the daily usage count in local storage and checks unlock status.
+     * This is the function called by the component's internal UI elements.
      */
-    const handleProtectedAnalysis = () => {
-        if (remainingAnalyses <= 0 || !isUnlocked) return;
+    const _runAnalysisWithLimitAndTracking = () => {
+        if (!isUnlocked) {
+            onUnlockRequest(); // Prompt user to unlock if not already
+            return;
+        }
+        if (remainingAnalyses <= 0) {
+            // Can add a specific message/toast here if desired for limit reached
+            return;
+        }
 
         try {
             const storedData = window.localStorage.getItem(ANALYSIS_LIMIT_KEY);
@@ -112,15 +120,15 @@ const AIAnalysis: React.FC<AIAnalysisProps> = ({ isUnlocked, onRunAnalysis, anal
         } catch (error) {
             console.error("Failed to update analysis limit in localStorage", error);
         }
-        onRunAnalysis();
+        onRunAnalysis(); // Call the actual analysis function passed from props
     };
 
     /** Renders the content of the analysis card based on the current state. */
     const renderContent = () => {
         if (isAnalyzing) return <LoadingState />;
-        if (aiAnalysisError) return <ErrorState errorMessage={aiAnalysisError} onTryAgain={handleProtectedAnalysis} />; // New error state
-        if (analysisResult) return <ResultsDisplay result={analysisResult} onRerun={handleProtectedAnalysis} remaining={remainingAnalyses} resetTimeMessage={resetTimeMessage} />;
-        return <InitialState onAnalyze={handleProtectedAnalysis} remaining={remainingAnalyses} resetTimeMessage={resetTimeMessage} />;
+        if (aiAnalysisError) return <ErrorState errorMessage={aiAnalysisError} onTryAgain={_runAnalysisWithLimitAndTracking} />; // New error state
+        if (analysisResult) return <ResultsDisplay result={analysisResult} onRerun={_runAnalysisWithLimitAndTracking} remaining={remainingAnalyses} resetTimeMessage={resetTimeMessage} />;
+        return <InitialState onAnalyze={_runAnalysisWithLimitAndTracking} remaining={remainingAnalyses} resetTimeMessage={resetTimeMessage} />;
     };
 
     return (
