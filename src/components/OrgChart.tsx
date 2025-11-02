@@ -11,7 +11,7 @@ interface OrgChartProps {
   /** The hierarchical data structure representing the organizational chart. */
   tree: TreeNode[];
   /** Callback function to add a subordinate to a given manager. */
-  onAddSubordinate: (managerId: string) => void;
+  onAddSubordinate: (managerId: string | null) => void;
   /** Callback function to edit an existing position. */
   onEdit: (position: TreeNode) => void;
   /** Callback function to delete a position. */
@@ -27,14 +27,14 @@ interface OrgChartProps {
  * subordinates in the organizational chart tree structure.
  * @param {object} props - The component props.
  */
-const OrgChartNode: React.FC<{ node: TreeNode, onAddSubordinate: (managerId: string) => void, onEdit: (position: TreeNode) => void, onDelete: (id: string) => void, onDuplicate: (position: TreeNode) => void }> = ({ node, onAddSubordinate, onEdit, onDelete, onDuplicate }) => (
+const OrgChartNode: React.FC<{ node: TreeNode, onAddSubordinate: (managerId: string | null) => void, onEdit: (position: TreeNode) => void, onDelete: (id: string) => void, onDuplicate: (position: TreeNode) => void }> = ({ node, onAddSubordinate, onEdit, onDelete, onDuplicate }) => (
   <li>
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="inline-block min-w-[140px]" // Removed w-full
+      className="inline-block min-w-[140px]" 
     >
       <PositionCard
         position={node}

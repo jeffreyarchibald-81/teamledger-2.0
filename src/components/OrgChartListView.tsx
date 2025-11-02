@@ -11,7 +11,7 @@ interface OrgChartListViewProps {
   /** The hierarchical data structure representing the organizational chart. */
   tree: TreeNode[];
   /** Callback function to add a subordinate to a given manager. */
-  onAddSubordinate: (managerId: string) => void;
+  onAddSubordinate: (managerId: string | null) => void;
   /** Callback function to edit an existing position. */
   onEdit: (position: TreeNode) => void;
   /** Callback function to delete a position. */
@@ -25,7 +25,7 @@ interface OrgChartListViewProps {
  * subordinates in a flat list view, indented to show hierarchy.
  * @param {object} props - The component props.
  */
-const OrgChartListItem: React.FC<{ node: TreeNode, onAddSubordinate: (managerId: string) => void, onEdit: (position: TreeNode) => void, onDelete: (id: string) => void, onDuplicate: (position: TreeNode) => void }> = ({ node, onAddSubordinate, onEdit, onDelete, onDuplicate }) => {
+const OrgChartListItem: React.FC<{ node: TreeNode, onAddSubordinate: (managerId: string | null) => void, onEdit: (position: TreeNode) => void, onDelete: (id: string) => void, onDuplicate: (position: TreeNode) => void }> = ({ node, onAddSubordinate, onEdit, onDelete, onDuplicate }) => {
   return (
     <motion.div
       layout
